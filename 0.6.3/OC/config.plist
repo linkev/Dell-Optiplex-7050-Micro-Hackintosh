@@ -32,7 +32,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>i7-7700 CPU Power Management</string>
+				<string>Intel CPU Power Management</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
