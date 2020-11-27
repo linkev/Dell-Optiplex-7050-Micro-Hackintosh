@@ -4,11 +4,11 @@
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Catalina 10.15.7 (19H2) with OpenCore 0.6.3.
+The current version installed is Catalina 10.15.7 (19H15) with OpenCore 0.6.3.
 
 I use Macmini8,1 as my SMBIOS.
 
-This was setup using the latest BIOS: `1.14.0`
+This was setup using the latest BIOS: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop)
 
 This has mostly been created with the help of the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) and my own personal experience.
 
@@ -74,7 +74,7 @@ This has mostly been created with the help of the [Vanilla Hackintosh Guide by D
 ### Not Working
 
 - [ ] Sleep/Wake (haven't tested, but I don't think it does)
-- [ ] Booting up without a monitor (or dummy Displayport). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (VNC in from time to time). I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either.
+- [ ] Booting up without a monitor (or dummy Displayport). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (VNC in from time to time). I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either. This could also be fixed with an iMac SMBIOS, haven't tried it.
 
 ## Using the EFI
 
@@ -83,10 +83,37 @@ Only things you need to set manually is the System Serial Number, System UUID, M
 ## Preparation
 
 - Update to the latest BIOS if you can
-- Once on the latest BIOS, reset it defaults (maybe even go as far as taking the battery out a few minutes to hard reset)
+- Once on the latest BIOS, reset it defaults (maybe even go as far as taking the CMOS battery out a few minutes to hard reset)
+- Make sure CFG Lock is Disabled. Alternitavely, enable AppleCpuPmCfgLock and AppleXcpmCfgLock in Kernel, however its better for performance to disable CFG Lock with the UEFI Variables below. You can also use the CFG Lock tool included to find the bit and flip it between Enabled and Disabled.
 - Avoid Samsung PM drives as they did not let me go past the installer, it would always crash (may be fixed with NVMEFix.kext, I just bought Sabrent instead)
+- For Big Sur, if you're using Dell Wireless 1560 or something similar, make sure to modify your config [according to the "Please pay attention" section](https://github.com/acidanthera/AirportBrcmFixup#please-pay-attention), otherwise it will take forever to boot into the installer
+
+## BIOS Settings
+
+[The entire BIOS settings can be found here.](BIOS.md)
 
 ## UEFI Variables
+
+| Variable name          | Offset | Default value  | Required value  | Description                                                         |
+|------------------------|--------|----------------|-----------------|---------------------------------------------------------------------|
+| CFG Lock               | 0x4ED  | 0x01 (Enabled) | 0x00 (Disabled) | Disables CFG Lock, otherwise you won't be able to boot              |
+| DVMT Pre-Allocated     | 0x795  | 0x01 (32M)     | 0x02 (64M)      | Increases DVMT pre-allocated size to 64M which is required          |
+| DVMT Total Gfx Mem     | 0x796  | 0x01 (128M)    | 0x03 (MAX)      | Increases total gfx memory limit to maximum                         |
+| Bi-directional PROCHOT | 0x527  | 0x01 (Enabled) | 0x00 (Disabled) | Disables PROCHOT, which limits your CPU to 0.79GHz. More info below |
+
+For CFG Lock, you can either do the manual way with UEFIModify (which is just a modified GRUB for Dell systems) or you can use the automated CFGUnlock in the boot picker and follow instructions.
+
+The manual way is to boot into OpenCore, choose UEFIModify, type in `setup_var`, the offset and the required value. An example screenshot is below:
+
+![UEFIModify](images/UEFIModify.jpg)
+
+The more automatic way is to boot into OpenCore, choose CFGUnlock and follow the instructions. An example screenshot is below:
+
+![CFGUnlock](images/CFGUnlock.jpg)
+
+Make sure to restart after any changes, they should apply. You can check if CFG is unlocked by using VerifyMsrE2 which is included with OpenCore tools. An example screenshot is below:
+
+![VerifyMsrE2](images/VerifyMsrE2.jpg)
 
 ## Miscellaneous
 
