@@ -1,16 +1,20 @@
-# Dell Optiplex 7050 Micro OpenCore 0.6.3
+# Dell Optiplex 7050 Micro OpenCore 0.6.5
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Catalina 10.15.7 (19H15) with OpenCore 0.6.3.
+The current version installed is Big Sur 11.1 (20C69) with OpenCore 0.6.5. Catalina was installed prior to Big Sur and it worked perfectly.
 
-I use Macmini8,1 as my SMBIOS.
+I use Macmini8,1 as my SMBIOS. iMac18,1 is also a good alternative if you wish to use it.
 
-This was setup using the latest BIOS: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop)
+This was setup using the latest Dell BIOS: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop)
 
 This has mostly been created with the help of the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) and my own personal experience.
+
+**MAKE SURE YOU ADD YOUR SYSTEM SERIAL NUMBER, SYSTEM UUID, MLB AND ROM IN PLATFORMINFO BEFORE BOOTING!**
+
+You may also need to remove the AirportBrcmFixup.kext, BrcmBluetoothInjector.kext, BrcmFirmwareData.kext and BrcmPatchRAM3.kext if you are not using a Dell WiFi card or any WiFi at all. Double/triple check everything to make sure, its a relatively light setup, but better safe than sorry!
 
 ## Hardware Configuration
 
@@ -21,7 +25,7 @@ This has mostly been created with the help of the [Vanilla Hackintosh Guide by D
 - Intel HD Graphics 630 1536 MB
 - Sabrent Rocket 512GB in the NVMe slot
 - Samsung 860 QVO 1TB in the SATA slot
-- Dell DW1560 802.11ac WiFi + Bluetooth 4.0 LE
+- Dell DW1820A 802.11ac WiFi + Bluetooth 4.1 LE
 - Intel I219-LM Gigabit Ethernet
 - Integrated speaker at the front, works perfectly with `alcid=11`
 - 1 Displayport 1.2
@@ -43,7 +47,7 @@ This has mostly been created with the help of the [Vanilla Hackintosh Guide by D
 - [x] All USB ports at their max speed (manually mapped)
 - [x] Gigabit Ethernet
 - [x] Secure Boot
-- [x] WiFi and Bluetooth (I use DW1560, but the included Intel chips may work with [OpenIntelWireless](https://github.com/OpenIntelWireless/itlwm))
+- [x] WiFi and Bluetooth (I use DW1820A, but the included Intel chips may work with [OpenIntelWireless](https://github.com/OpenIntelWireless/itlwm))
 - [x] Location Services
 - [x] Onboard Audio + Integrated Speaker at the front
 - [x] iMessage (set your Serial Number, UUID and MLB correctly)
@@ -86,7 +90,7 @@ Only things you need to set manually is the System Serial Number, System UUID, M
 - Once on the latest BIOS, reset it defaults (maybe even go as far as taking the CMOS battery out a few minutes to hard reset)
 - Make sure CFG Lock is Disabled. Alternitavely, enable AppleCpuPmCfgLock and AppleXcpmCfgLock in Kernel, however its better for performance to disable CFG Lock with the UEFI Variables below. You can also use the CFG Lock tool included to find the bit and flip it between Enabled and Disabled.
 - Avoid Samsung PM drives as they did not let me go past the installer, it would always crash (may be fixed with NVMEFix.kext, I just bought Sabrent instead)
-- For Big Sur, if you're using Dell Wireless 1560 or something similar, make sure to modify your config [according to the "Please pay attention" section](https://github.com/acidanthera/AirportBrcmFixup#please-pay-attention), otherwise it will take forever to boot into the installer
+- For Big Sur, if you're using Dell Wireless 1820A or something similar, make sure to modify your config [according to the "Please pay attention" section](https://github.com/acidanthera/AirportBrcmFixup#please-pay-attention), otherwise it will take forever to boot into the installer
 
 ## BIOS Settings
 
