@@ -1,10 +1,10 @@
-# Dell Optiplex 7050 Micro OpenCore 0.6.5
+# Dell Optiplex 7050 Micro OpenCore 0.6.7
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Big Sur 11.1 (20C69) with OpenCore 0.6.5. Catalina was installed prior to Big Sur and it worked perfectly.
+The current version installed is Big Sur 11.2.3 (20D91) with OpenCore 0.6.7. Catalina was installed prior to Big Sur and it worked perfectly.
 
 I use Macmini8,1 as my SMBIOS. iMac18,1 is also a good alternative if you wish to use it.
 
