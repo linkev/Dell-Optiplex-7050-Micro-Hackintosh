@@ -47,7 +47,7 @@ You may also need to remove the AirportBrcmFixup.kext, BrcmBluetoothInjector.kex
 - [x] All USB ports at their max speed (manually mapped)
 - [x] Gigabit Ethernet
 - [x] Secure Boot
-- [x] WiFi and Bluetooth (I use DW1820A, but the included Intel chips may work with [OpenIntelWireless](https://github.com/OpenIntelWireless/itlwm))
+- [x] WiFi and Bluetooth (I use DW1560, but the included Intel chips may work with [OpenIntelWireless](https://github.com/OpenIntelWireless/itlwm))
 - [x] Location Services
 - [x] Onboard Audio + Integrated Speaker at the front
 - [x] iMessage (set your Serial Number, UUID and MLB correctly)
