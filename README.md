@@ -1,12 +1,12 @@
-# Dell Optiplex 7050 Micro OpenCore 0.7.0
+# Dell Optiplex 7050 Micro OpenCore 0.7.7
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Big Sur 11.4 (20F71) with OpenCore 0.7.0. Catalina was installed prior to Big Sur and it worked perfectly.
+The current version installed is Monterey 12.1 (21C52) with OpenCore 0.7.7. Catalina was installed prior to Big Sur and it worked perfectly. I am to have as clean of configuration as possible and so far everything has been working great.
 
-I use Macmini8,1 as my SMBIOS. iMac18,1 is also a good alternative if you wish to use it on a normal size Optiplex 7050 (SFF). Make sure to refer to the [Vanilla guide](https://dortania.github.io/OpenCore-Install-Guide/) if you are doing so for minor tweaks.
+I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issue). Make sure to refer to the [Vanilla guide](https://dortania.github.io/OpenCore-Install-Guide/) if you are doing so for minor tweaks.
 
 This was setup using the latest Dell BIOS at the time: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop). I have successfully updated to [1.15.1](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=jkt52&oscode=wt64a&productcode=optiplex-7050-desktop) and then [1.15.2](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=2xjd2&oscode=wt64a&productcode=optiplex-7050-desktop) after the fact with no issues (via Windows or the built in BIOS Update Utility).
 
@@ -15,6 +15,12 @@ This has mostly been created with the help of the [Vanilla Hackintosh Guide by D
 **MAKE SURE YOU ADD YOUR SYSTEM SERIAL NUMBER, SYSTEM UUID, MLB AND ROM IN PLATFORMINFO BEFORE BOOTING!**
 
 You may also need to remove the AirportBrcmFixup.kext, BrcmBluetoothInjector.kext, BrcmFirmwareData.kext and BrcmPatchRAM3.kext if you are not using a Dell WiFi card or any WiFi at all. Double/triple check everything to make sure, its a relatively light setup, but better safe than sorry!
+
+Check the NVRAM values as well:
+Remove `-v` after you're fully done installing macOS, to turn off Verbose.
+You need to remove `brcmfx-country=#a` if you are not using a DW1560/DW1820A, but an [Intel WiFi chip instead](https://github.com/OpenIntelWireless/itlwm).
+Modify `alcid=11` in case your audio chip is different.
+Remove `igfxonln=1` if you have a monitor plugged in all the time (not a dummy dongle, not sure if this flags helps anything really).
 
 ## Hardware Configuration
 
@@ -74,11 +80,12 @@ You may also need to remove the AirportBrcmFixup.kext, BrcmBluetoothInjector.kex
 - [x] Various sharing functions like Content Caching (very useful if you have lots of Apple devices)
 - [x] Time Machine
 - [x] Seamless software updates
+- [x] Monterey's AirPlay to Mac with [FeatureUnlock](https://github.com/acidanthera/FeatureUnlock)
 
 ### Not Working
 
 - [ ] Sleep/Wake (I haven't tested, but I don't think it does).
-- [ ] Booting up without a monitor (or dummy Displayport). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (I connect via VNC from time to time). I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either. This could also be fixed with an iMac SMBIOS, I haven't tried it.
+- [ ] Booting up without a monitor (or dummy Displayport). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (I connect via [VNC](https://www.realvnc.com/en/connect/download/vnc/)/[TeamViewer](https://www.teamviewer.com/en/download/mac-os/) from time to time). I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either. This could also be fixed with an iMac SMBIOS, I haven't tried it.
 
 ## Using the EFI
 
@@ -90,7 +97,8 @@ Only things you need to set manually is the System Serial Number, System UUID, M
 - Once on the latest BIOS, reset it defaults (maybe even go as far as taking the CMOS battery out a few minutes to hard reset).
 - Make sure CFG Lock is Disabled. Alternatively, enable AppleCpuPmCfgLock and AppleXcpmCfgLock in Kernel, however, its better for performance to disable CFG Lock with the UEFI Variables below. You can also use the CFG Lock tool included to find the bit and flip it between Enabled and Disabled.
 - Avoid Samsung PM drives as they did not let me go past the installer, it would always crash (may be fixed with NVMEFix.kext, I just bought a Sabrent SSD instead).
-- For Big Sur, if you're using Dell Wireless 1820A or something similar, make sure to modify your config [according to the "Please pay attention" section](https://github.com/acidanthera/AirportBrcmFixup#please-pay-attention), otherwise it will take forever to boot into the installer.
+- To add to the above point, just use a Sabrent SSD to make your life easy. I never got Samsung/Toshiba drives to work with the installer (they come as default with XPS/Optiplex computers).
+- For Big Sur, if you're using Dell Wireless 1560/1820A or something similar, make sure to modify your config [according to the "Please pay attention" section](https://github.com/acidanthera/AirportBrcmFixup#please-pay-attention), otherwise it will take forever to boot into the installer.
 
 ## BIOS Settings
 
@@ -123,7 +131,7 @@ Make sure to restart after any changes, they should apply. You can check if CFG 
 
 I have swapped from DW1820A to the DW1560 recently to see if Airdrop/Continuity/Handoff would work better, but I'm just not sure on both of these cards anymore. It seems [itlwm](https://github.com/OpenIntelWireless/itlwm) is making very good progress and you're better off with an Intel card these days. Still, I'll keep it in there since I am connected via Ethernet anyway.
 
-I use exelban Stats to monitor everything about my system in the menu bar: https://github.com/exelban/stats
+I am using [exelban's Stats](https://github.com/exelban/stats) to monitor CPU, GPU, Memory, Disk, Temperatures, Fan Speed and Network.
 
 This has been a great Plex Server throughout its use, very good Minecraft server too and have Wireguard VPN Server setup with [this guide](https://barrowclift.me/post/wireguard-server-on-macos).
 
