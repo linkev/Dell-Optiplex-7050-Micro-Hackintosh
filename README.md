@@ -73,7 +73,7 @@ Remove `igfxonln=1` if you have a monitor plugged in all the time (not a dummy d
 - [x] NVRAM
 - [x] FileVault
 - [x] Dell Sensors (Fans/Temperature)
-- [x] Built in Displayport 1.4 and HDMI 1.2
+- [x] Built in Displayport 1.2 and HDMI 1.4
 - [x] TRIM working on Sabrent NVMe
 - [x] TRIM enabled for SATA SSD with `sudo trimforce enable`
 - [x] Sidecar
