@@ -3,27 +3,29 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>19H1615</string>
+	<string>20G415</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>FeatureUnlock</string>
+	<string>WhateverGreen</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.khronokernel.FeatureUnlock</string>
+	<string>as.vit9696.WhateverGreen</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>FeatureUnlock</string>
+	<string>WhateverGreen</string>
 	<key>CFBundlePackageType</key>
 	<string>KEXT</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.5</string>
+	<string>1.5.7</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.5</string>
+	<string>1.5.7</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -42,14 +44,31 @@
 	<string>12D4e</string>
 	<key>IOKitPersonalities</key>
 	<dict>
-		<key>FeatureUnlock</key>
+		<key>NVHDAEnabler</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
-			<string>com.khronokernel.FeatureUnlock</string>
+			<string>as.vit9696.WhateverGreen</string>
 			<key>IOClass</key>
-			<string>FeatureUnlock</string>
+			<string>NVHDAEnabler</string>
 			<key>IOMatchCategory</key>
-			<string>FeatureUnlock</string>
+			<string>IOFramebuffer</string>
+			<key>IOPCIClassMatch</key>
+			<string>0x03000000&amp;0xff000000</string>
+			<key>IOPCIMatch</key>
+			<string>0x000010de&amp;0x0000ffff</string>
+			<key>IOProbeScore</key>
+			<integer>300000</integer>
+			<key>IOProviderClass</key>
+			<string>IOPCIDevice</string>
+		</dict>
+		<key>as.vit9696.WhateverGreen</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>as.vit9696.WhateverGreen</string>
+			<key>IOClass</key>
+			<string>WhateverGreen</string>
+			<key>IOMatchCategory</key>
+			<string>WhateverGreen</string>
 			<key>IOProviderClass</key>
 			<string>IOResources</string>
 			<key>IOResourceMatch</key>
@@ -57,25 +76,29 @@
 		</dict>
 	</dict>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.14</string>
+	<string>10.6</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2021 Khronokernel. All rights reserved.</string>
+	<string>Copyright © 2018 vit9696. All rights reserved.</string>
+	<key>OSBundleCompatibleVersion</key>
+	<string>1.0</string>
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>as.vit9696.Lilu</key>
-		<string>1.4.7</string>
+		<string>1.2.0</string>
+		<key>com.apple.iokit.IOPCIFamily</key>
+		<string>1.0.0b1</string>
 		<key>com.apple.kpi.bsd</key>
-		<string>12.0.0</string>
+		<string>10.0.0</string>
 		<key>com.apple.kpi.dsep</key>
-		<string>12.0.0</string>
+		<string>10.0.0</string>
 		<key>com.apple.kpi.iokit</key>
-		<string>12.0.0</string>
+		<string>10.0.0</string>
 		<key>com.apple.kpi.libkern</key>
-		<string>12.0.0</string>
+		<string>10.0.0</string>
 		<key>com.apple.kpi.mach</key>
-		<string>12.0.0</string>
+		<string>10.0.0</string>
 		<key>com.apple.kpi.unsupported</key>
-		<string>12.0.0</string>
+		<string>10.0.0</string>
 	</dict>
 	<key>OSBundleRequired</key>
 	<string>Root</string>

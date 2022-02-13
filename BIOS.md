@@ -2,6 +2,8 @@
 
 This was written with my Optiplex 7050 Micro being on BIOS 1.14.0, newer BIOSes might change stuff, you never know (even if Intel 7th gen's were ages ago).
 
+**Update:** It seems BIOS updates don't change anything, in terms of what you can turn off or on these days, just security updates, so don't worry about them too much!
+
 
 I'll just lay out the way my BIOS is shown and whatever is ticked/selected so you can copy it on yours, and hopefully make it work. Make sure your BIOS is updated to at least what mine is and its always best to Reset to Factory Defaults before starting to flick switches (from personal experience, resetting BIOS does sometimes flip hidden switches, in case anybody tried to screw around with it before).
 
@@ -15,7 +17,7 @@ I'll just lay out the way my BIOS is shown and whatever is ticked/selected so yo
 
 ## System Configuration
 - **Integrated NIC** - Untick "Enable UEFI Network Stack" and select Enabled (or not, if you don't want Ethernet)
-- **SATA Operation** - Select "AHCI" and make sure its done before installing anything, Windows or macOS (unless you know RAID)
+- **SATA Operation** - Select "AHCI" and make sure its enabled before installing anything, RAID On is only a driver for Windows 7 which didn't support RAID at the time, you want the AHCI option here
 - **Drives** - Leave all ticked, may be different for you. I had SATA-0, SATA-4 and M.2 PCIe SSD-0.
 - **SMART Reporting** - "Enable SMART Reporting" is enabled/ticked. Probably doesn't matter, but I like to have it on
 - **USB Configuration** - Everything is ticked, "Enable USB Boot Support", "Enable Front USB Ports" and "Enable Rear USB Ports". Self explanatory
@@ -26,7 +28,7 @@ I'll just lay out the way my BIOS is shown and whatever is ticked/selected so yo
 - **Dust Filter Maintenance** - I left it at disabled, there isn't even any dust filter in the Micro version, must be an oversight ¯\\\_(ツ)\_/¯
 
 ## Video
-- **Primary Display** - Set it as "Intel HD Graphics" instead of Auto, just to reinforce it to use the iGPU (unless you have a bigger Optiplex with a dedicated AMD GPU)
+- **Primary Display** - Set it as "Intel HD Graphics" instead of Auto, just to reinforce it to use the iGPU (unless you have a bigger Optiplex with a dedicated AMD GPU or an [old NVIDIA GPU](https://dortania.github.io/GPU-Buyers-Guide/modern-gpus/nvidia-gpu.html) that is still supported)
 
 ## Security
 - **Admin Password** - Left as default
@@ -36,8 +38,8 @@ I'll just lay out the way my BIOS is shown and whatever is ticked/selected so yo
 - **Password Configuration** - Left as default
 - **Password Bypass** - Left as default
 - **Password Change** - Left as default, "Allow Non-Admin Password Changes" is ticked
-- **UEFI Capsule Firmware Updates** - "Enable UEFI Capsule Firmware Updates" is disabled/unticked, I personally disable this on everything, because Windows Update doing BIOS updates is a recipe for disaster, especially when supporting clients who might unplug/force shutdown
-- **TPM 1.2 Security** - "TPM On" is disabled/unticked. I personally hate Dell TPM's, the amount of issues it has caused me at work is too many with literally 0 benefit. macOS also doesn't care about it so disable
+- **UEFI Capsule Firmware Updates** - "Enable UEFI Capsule Firmware Updates" is disabled/unticked, I personally disable this on everything, because Windows Update doing BIOS updates is a recipe for disaster, especially when supporting people who might unplug/force shutdown the computer in the middle of it
+- **TPM 1.2 Security** - "TPM On" is disabled/unticked. ~~I personally hate Dell TPM's, the amount of issues it has caused me at work is too many with literally 0 benefit.~~ Nevermind, the TPM's malfunctioning was just my work colleagues having stupidly old Group Policies. macOS also doesn't care about TPM, so disable it here
 - **Computrace(R)** - Deactivate this, never used it and macOS doesn't need it
 - **Chassis Intrusion** - Left as default, you can change to your preference
 - **CPU XD Support** - **MAKE SURE TO ENABLE CPU XD SUPPORT!!!** If disabled, computer immediately restarts after trying to boot and you cannot progress. I even had to DM a couple Reddit users who had the same computer as me to ask for help, only to realise I disabled it
@@ -63,7 +65,7 @@ I'll just lay out the way my BIOS is shown and whatever is ticked/selected so yo
 - **HyperThread control** - Enabled
 
 ## Power Management
-- **AC Recovery** - I keep this enabled, so the computer starts again in case of power loss
+- **AC Recovery** - I keep this enabled, so the computer starts again in case of power loss, totally up to you
 - **Auto On Time** - Left as default
 - **Deep Sleep Control** - Disabled
 - **USB Wake Support** - This is unticked
@@ -72,7 +74,7 @@ I'll just lay out the way my BIOS is shown and whatever is ticked/selected so yo
 - **Intel Ready Mode** - Disabled
 
 ## POST Behaviour
-- **Adapter Warnings** - Disabled to prevent the boot process from being halted
+- **Adapter Warnings** - Disabled, to prevent the boot process from being halted
 - **Numlock LED** - Enabled, up to you though
 - **Keyboard Errors** - Disabled
 - **Fastboot** - I set it to Thorough, up to you as well, I prefer everything to be initialized at the start
@@ -87,7 +89,7 @@ I'll just lay out the way my BIOS is shown and whatever is ticked/selected so yo
 ## Virtualization Support
 - **Virtualization** - Enabled
 - **VT for Direct I/O** - Enabled, double check if DisableIOMapper is set to YES. [More info here.](https://dortania.github.io/OpenCore-Install-Guide/config.plist/kaby-lake.html#kernel)
-- **Trusted Execution** - Disabled, its even greyed out for me
+- **Trusted Execution** - Disabled, it will probably be greyed out
 
 ## Wireless
 - **Wireless Device Enable** - Enabled, self explanatory
@@ -97,8 +99,8 @@ I'll just lay out the way my BIOS is shown and whatever is ticked/selected so yo
 - **Asset Tag** - This is just information
 - **SERR Messages** - Enabled
 - **BIOS Downgrade** - Enabled, doesn't matter
-- **Data Wipe** - Disabled forever, unless you want the computer to erase everything on next boot
-- **BIOS Recovery** - BIOS Recovery from Hard Drive is enabled, BIOS Auto-Recovery is disabled
+- **Data Wipe** - Disabled forever, unless you want the computer to erase everything on the next boot
+- **BIOS Recovery** - BIOS Recovery from Hard Drive is enabled, BIOS Auto-Recovery is disabled, I don't think this matters though
 
 ## System Logs
 - **BIOS Events** - View only, self explanatory
