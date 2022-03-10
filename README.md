@@ -1,14 +1,14 @@
-# Dell Optiplex 7050 Micro OpenCore 0.7.8
+# Dell Optiplex 7050 Micro OpenCore 0.7.9
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Monterey 12.1 (21D49) with OpenCore 0.7.8. Catalina was installed prior to Big Sur and it worked perfectly. I aim to have as clean of configuration as possible and so far everything has been working great.
+The current version installed is Monterey 12.2.1 (21D62) with OpenCore 0.7.9. Catalina was installed prior to Big Sur and it worked perfectly. I aim to have as clean of configuration as possible and so far everything has been working great.
 
-I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issue). Make sure to refer to the [Vanilla guide](https://dortania.github.io/OpenCore-Install-Guide/) if you are doing so for minor tweaks.
+I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issues).
 
-This was setup using the latest Dell BIOS at the time: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop). I have successfully updated to [1.15.1](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=jkt52&oscode=wt64a&productcode=optiplex-7050-desktop) and then [1.15.2](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=2xjd2&oscode=wt64a&productcode=optiplex-7050-desktop) after the fact with no issues (via Windows or the built in BIOS Update Utility).
+This was setup using the latest Dell BIOS at the time: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop). I have successfully updated to [1.15.1](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=jkt52&oscode=wt64a&productcode=optiplex-7050-desktop) and then [1.15.2](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=2xjd2&oscode=wt64a&productcode=optiplex-7050-desktop) after the fact with no issues (via Windows or the built in BIOS Update Utility). If you are starting from scratch, I recommend updating to the latest BIOS before anything else.
 
 This has mostly been created with the help of the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) and my own personal experience.
 
@@ -87,11 +87,13 @@ Double/triple check everything to make sure, its a relatively light setup, but b
 ### Not Working
 
 - [ ] Sleep/Wake (I haven't tested, but I don't think it does).
-- [ ] Booting up without a monitor (or dummy Displayport dongle). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (I connect via [VNC](https://www.realvnc.com/en/connect/download/vnc/)/[TeamViewer](https://www.teamviewer.com/en/download/mac-os/) from time to time). I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either. This could also be fixed with an iMac SMBIOS, I haven't tried it.
+- [ ] Booting up without a monitor (or dummy Displayport dongle). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (I connect via [VNC](https://www.realvnc.com/en/connect/download/vnc/)/[TeamViewer](https://www.teamviewer.com/en/download/mac-os/) from time to time).
+I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either.
+I recently started using [Parsec](https://parsec.app/) to remote in and its been working fantastic so far.
 
 ## Using the EFI
 
-Only things you need to set manually is the System Serial Number, System UUID, MLB and ROM. I have set them as {CHANGE ME} and OpenCore will complain if you do not set them correctly. You can get the first three created with [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS). The ROM part can be your Ethernet or WiFi MAC Address such as E4 85 G6 M8 H9 2Q, for example. Refer to the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) if you need more help.
+Only things you need to set manually is the **System Serial Number**, **System UUID**, **MLB** and **ROM**. I have set them as **{CHANGE ME}** and OpenCore will complain if you do not set them correctly. You can get the first three created with [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS). The ROM part can be your Ethernet or WiFi MAC Address such as E4 85 G6 M8 H9 2Q, for example. Refer to the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) if you need more help.
 
 ## Preparation
 
