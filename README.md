@@ -1,10 +1,10 @@
-# Dell Optiplex 7050 Micro OpenCore 0.7.9
+# Dell Optiplex 7050 Micro OpenCore 0.8.0
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Monterey 12.2.1 (21D62) with OpenCore 0.7.9. Catalina was installed prior to Big Sur and it worked perfectly. I aim to have as clean of configuration as possible and so far everything has been working great.
+The current version installed is Monterey 12.4 (21F79) with OpenCore 0.8.0. Catalina was installed prior to Big Sur and it worked perfectly. I aim to have as clean of configuration as possible and so far everything has been working great.
 
 I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issues).
 
@@ -14,7 +14,7 @@ This has mostly been created with the help of the [Vanilla Hackintosh Guide by D
 
 **MAKE SURE YOU ADD YOUR SYSTEM SERIAL NUMBER, SYSTEM UUID, MLB AND ROM IN PLATFORMINFO BEFORE BOOTING!**
 
-You may also need to remove the AirportBrcmFixup.kext, BrcmBluetoothInjector.kext, BrcmFirmwareData.kext and BrcmPatchRAM3.kext if you are not using a Dell WiFi card or any WiFi at all.
+You may also need to remove the AirportBrcmFixup.kext, BlueToolFixup.kext, BrcmBluetoothInjector.kext, BrcmFirmwareData.kext and BrcmPatchRAM3.kext if you are not using a Dell WiFi card or any WiFi at all.
 
 Don't forget to check the NVRAM values as well:
 - Remove `-v` after you're fully done installing macOS, to turn off Verbose.
@@ -29,7 +29,7 @@ Double/triple check everything to make sure, its a relatively light setup, but b
 ![About This Mac](images/aboutmac.png)
 
 - Intel i7-7700 CPU (Not the T version, the full desktop 65W version) (I don't think the CPU matters, they're all relatively the same)
-- 16GB RAM DDR4 Samsung 2666 MHz, but running at 2400 MHz, because Intel limits the speed
+- 32GB RAM DDR4 SK Hynix 3200 MHz, but running at 2400 MHz, because Intel limits the speed
 - Intel HD Graphics 630 1536 MB
 - Sabrent Rocket 512GB in the NVMe slot
 - Samsung 860 QVO 1TB in the SATA slot
