@@ -1,10 +1,10 @@
-# Dell Optiplex 7050 Micro OpenCore 0.8.0
+# Dell Optiplex 7050 Micro OpenCore 0.8.4
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Monterey 12.4 (21F79) with OpenCore 0.8.0. Catalina was installed prior to Big Sur and it worked perfectly. I aim to have as clean of configuration as possible and so far everything has been working great.
+The current version installed is Monterey 12.5.1 (21G83) with OpenCore 0.8.4. Catalina was installed prior to Big Sur and it worked perfectly. I aim to have as clean of configuration as possible and so far everything has been working great.
 
 I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issues).
 
@@ -17,6 +17,7 @@ This has mostly been created with the help of the [Vanilla Hackintosh Guide by D
 You may also need to remove the AirportBrcmFixup.kext, BlueToolFixup.kext, BrcmBluetoothInjector.kext, BrcmFirmwareData.kext and BrcmPatchRAM3.kext if you are not using a Dell WiFi card or any WiFi at all.
 
 Don't forget to check the NVRAM values as well:
+
 - Remove `-v` after you're fully done installing macOS, to turn off Verbose.
 - You need to remove `brcmfx-country=#a` if you are not using a DW1560/DW1820A, but an [Intel WiFi chip instead](https://github.com/OpenIntelWireless/itlwm), or no WiFi at all (just Ethernet).
 - Modify `alcid=11` in case your audio chip is different, although I think all of the 7050's I've seen use the same Realtek ALC3234 controller.
@@ -28,8 +29,8 @@ Double/triple check everything to make sure, its a relatively light setup, but b
 
 ![About This Mac](images/aboutmac.png)
 
-- Intel i7-7700 CPU (Not the T version, the full desktop 65W version) (I don't think the CPU matters, they're all relatively the same)
-- 32GB RAM DDR4 SK Hynix 3200 MHz, but running at 2400 MHz, because Intel limits the speed
+- Intel i7-7700 CPU (Not the T version, the full desktop 65W version, kinda overkill and probably runs at 45W) (I don't think the CPU matters, they're all relatively the same)
+- 32GB RAM DDR4 SK Hynix 3200 MHz, but running at 2400 MHz, because Intel/Dell limits the speed
 - Intel HD Graphics 630 1536 MB
 - Sabrent Rocket 512GB in the NVMe slot
 - Samsung 860 QVO 1TB in the SATA slot
@@ -38,7 +39,7 @@ Double/triple check everything to make sure, its a relatively light setup, but b
 - Integrated speaker at the front, works perfectly with `alcid=11`
 - 1 Displayport 1.2
 - 1 HDMI 1.4
-- 1 addon Displayport port, works in Windows, doesn't work in macOS, came with the specific Optiplex I bought
+- 1 Addon Displayport port, works in Windows, doesn't work in macOS, came with the specific Optiplex I bought
 - 1 USB-C Port and 1 USB-A port at the front
 - 1 headphone jack and 1 microphone port at the front
 - 4 USB-A ports at the back
@@ -118,6 +119,7 @@ Only things you need to set manually is the **System Serial Number**, **System U
 | Bi-directional PROCHOT | 0x527  | 0x01 (Enabled) | 0x00 (Disabled) | Disables PROCHOT, which limits your CPU to 0.79GHz. More info below |
 
 ### Automated way
+
 You can use the tools included to find your hidden CFG Lock value and disable it. These are **CFGUnlock** and **ControlMsrE2**. As of OpenCore 0.6.8, ControlMsrE2 is included and may be used to unlock CFG Lock for systems which have no easy way of doing so. This is a more automated and user-friendly way.
 
 Here is an example of the **CFGUnlock** tool. Boot into OpenCore, choose **CFGUnlock** and follow the instructions:
@@ -127,15 +129,16 @@ Here is an example of the **CFGUnlock** tool. Boot into OpenCore, choose **CFGUn
 You will still need to use the manual way below to change the DVMT variables.
 
 ### Manual way
+
 The manual way is to boot into OpenCore, choose UEFIModify, type in `setup_var`, the offset and the required value. An example screenshot is below:
 
 ![UEFIModify](images/UEFIModify.jpg)
 
 The above image is for the CFG Lock value. For DVMT, you would type:
 
-**setup_var 0x795 0x02**
+`setup_var 0x795 0x02`
 
-**setup_var 0x796 0x03**
+`setup_var 0x796 0x03`
 
 Make sure to restart after any changes, they should apply. You used to be able to check the CFG Lock status with VerifyMsrE2, but since it was replaced by ControlMsrE2, you can use that instead. You'll know if it worked or not, by whether you can boot your installer:
 
