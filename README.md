@@ -1,12 +1,14 @@
-# Dell Optiplex 7050 Micro OpenCore 0.8.4
+# Dell Optiplex 7050 Micro OpenCore 0.8.7
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Monterey 12.5.1 (21G83) with OpenCore 0.8.4. Catalina was installed prior to Big Sur and it worked perfectly. I aim to have as clean of configuration as possible and so far everything has been working great.
+The current version installed is Ventura 13.0.1 (22A400) with OpenCore 0.8.7. Catalina was installed prior to Big Sur and it worked perfectly. Monterey also ran without issues. I aim to have as clean of configuration as possible and so far everything has been working great.
 
-I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issues).
+I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issues). This is for reference only, it may or may not work on your machine, depending how close to the config you are. For example, if it's a bigger version of the Optiplex 7050, then it should work with minimal changes.
+
+If you deviate to something like a 7040 or a 7060, you may need to change some things for CPU compatibility etc. However, all Optiplexes are relatively similar and easy to Hackintosh.
 
 This was setup using the latest Dell BIOS at the time: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop). I have successfully updated to [1.15.1](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=jkt52&oscode=wt64a&productcode=optiplex-7050-desktop) and then [1.15.2](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=2xjd2&oscode=wt64a&productcode=optiplex-7050-desktop) after the fact with no issues (via Windows or the built in BIOS Update Utility). If you are starting from scratch, I recommend updating to the latest BIOS before anything else.
 
@@ -91,6 +93,16 @@ Double/triple check everything to make sure, its a relatively light setup, but b
 - [ ] Booting up without a monitor (or dummy Displayport dongle). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (I connect via [VNC](https://www.realvnc.com/en/connect/download/vnc/)/[TeamViewer](https://www.teamviewer.com/en/download/mac-os/) from time to time).
 I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either.
 I recently started using [Parsec](https://parsec.app/) to remote in and its been working fantastic so far.
+
+## Pictures
+
+Here's some internal pictures as well as the back ports, just for completeness sake. You can see the front ports in the main image above, it's a relatively light machine.
+
+![Internal picture with fan](images/internal-with-fan.png)
+
+![Internal picture without fan](images/internal-no-fan.png)
+
+![Back Ports](images/back.png)
 
 ## Using the EFI
 
