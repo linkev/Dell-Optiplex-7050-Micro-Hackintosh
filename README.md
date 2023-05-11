@@ -1,16 +1,22 @@
-# Dell Optiplex 7050 Micro OpenCore 0.8.7
+# Dell Optiplex 7050 Micro OpenCore 0.9.2
 
 ![Optiplex Showoff](images/main.jpeg)
 
 This repository contains my personal EFI configuration for the fantastic Dell Optiplex 7050 Micro.
 
-The current version installed is Ventura 13.0.1 (22A400) with OpenCore 0.8.7. Catalina was installed prior to Big Sur and it worked perfectly. Monterey also ran without issues. I aim to have as clean of configuration as possible and so far everything has been working great.
+I am currently dual-booting macOS Ventura 13.3.1 (a) (22E772610a) with OpenCore 0.9.2 and Windows 11 22H2 on the same Sabrent drive with two 256GB partitions. Easy to switch between both OSes by pointing to their respective .efi bootloaders in the BIOS and picking them in the Dell Boot Menu.
+
+Catalina was installed prior to Big Sur and it worked perfectly. Monterey also ran without issues. I aim to have as clean of configuration as possible and so far everything has been working great.
 
 I use iMac18,1 as my SMBIOS. Macmini8,1 is also a good alternative, depends what you want it to show up as (have used both SMBIOS with no issues). This is for reference only, it may or may not work on your machine, depending how close to the config you are. For example, if it's a bigger version of the Optiplex 7050, then it should work with minimal changes.
 
 If you deviate to something like a 7040 or a 7060, you may need to change some things for CPU compatibility etc. However, all Optiplexes are relatively similar and easy to Hackintosh.
 
-This was setup using the latest Dell BIOS at the time: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop). I have successfully updated to [1.15.1](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=jkt52&oscode=wt64a&productcode=optiplex-7050-desktop) and then [1.15.2](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=2xjd2&oscode=wt64a&productcode=optiplex-7050-desktop) after the fact with no issues (via Windows or the built in BIOS Update Utility). If you are starting from scratch, I recommend updating to the latest BIOS before anything else.
+This was setup using the latest Dell BIOS at the time: [1.14.0](https://www.dell.com/support/home/en-tc/drivers/driversdetails?driverid=80chv&oscode=wt64a&productcode=optiplex-7050-desktop). I have successfully updated to [1.15.1](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=jkt52&oscode=wt64a&productcode=optiplex-7050-desktop) and then [1.15.2](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=2xjd2&oscode=wt64a&productcode=optiplex-7050-desktop) after the fact with no issues (via Windows or the built in BIOS Update Utility). 
+
+Currently, BIOS version [1.24.0](https://www.dell.com/support/home/en-uk/drivers/driversdetails?driverid=hy8pf&oscode=wt64a&productcode=optiplex-7050-desktop) is installed and running as normal.
+
+If you are starting from scratch, I recommend updating to the latest BIOS and completely resetting it before anything else.
 
 This has mostly been created with the help of the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) and my own personal experience.
 
@@ -25,7 +31,9 @@ Don't forget to check the NVRAM values as well:
 - Modify `alcid=11` in case your audio chip is different, although I think all of the 7050's I've seen use the same Realtek ALC3234 controller.
 - Remove `igfxonln=1` if you have a monitor plugged in all the time (not a dummy dongle, not sure if this flag helps anything really).
 
-Double/triple check everything to make sure, its a relatively light setup, but better safe than sorry!
+I recommend using [OpenCore Configurator](https://mackie100projects.altervista.org/download-opencore-configurator/) to edit your config.plist and use the built in checker to validate if everything you did was correct. I personally use it all the time to update my setup.
+
+As always, double/triple check everything to make sure, it's a relatively light setup, but better safe than sorry!
 
 ## Hardware Configuration
 
@@ -86,17 +94,18 @@ Double/triple check everything to make sure, its a relatively light setup, but b
 - [x] Time Machine
 - [x] Seamless software updates
 - [x] Monterey's AirPlay to Mac with [FeatureUnlock](https://github.com/acidanthera/FeatureUnlock)
+- [x] Continuity Camera via USB
 
 ### Not Working
 
 - [ ] Sleep/Wake (I haven't tested, but I don't think it does).
-- [ ] Booting up without a monitor (or dummy Displayport dongle). This takes a much longer time to boot and the system is very laggy if there is no monitor plugged in. Seems like the iGPU is not activated, which makes everything lag. Disabling WiFi improves things, but that's not ideal as I am running this in headless mode (I connect via [VNC](https://www.realvnc.com/en/connect/download/vnc/)/[TeamViewer](https://www.teamviewer.com/en/download/mac-os/) from time to time).
-I had to buy a dummy Displayport which activates the iGPU and performs normally with it. Let me know if there is a way to do it without the dummy plug or maybe the actual Macmini can't run headless either.
-I recently started using [Parsec](https://parsec.app/) to remote in and its been working fantastic so far.
+- [ ] Booting up without a monitor (Headless mode).
+I had to buy a dummy Displayport which activates the iGPU and performs normally with it. There may be some extra configuration required in DeviceProperties, since it currently has very minimal entries.
+I'm using [Parsec](https://parsec.app/) to remote in and it's been working fantastic so far.
 
 ## Pictures
 
-Here's some internal pictures as well as the back ports, just for completeness sake. You can see the front ports in the main image above, it's a relatively light machine.
+Here are some internal pictures, as well as the back ports, just for this guide's completeness sake. You can see the front ports in the main image above, it's a relatively small and light machine.
 
 ![Internal picture with fan](images/internal-with-fan.png)
 
@@ -106,7 +115,7 @@ Here's some internal pictures as well as the back ports, just for completeness s
 
 ## Using the EFI
 
-Only things you need to set manually is the **System Serial Number**, **System UUID**, **MLB** and **ROM**. I have set them as **{CHANGE ME}** and OpenCore will complain if you do not set them correctly. You can get the first three created with [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS). The ROM part can be your Ethernet or WiFi MAC Address such as E4 85 G6 M8 H9 2Q, for example. Refer to the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) if you need more help.
+Only things you need to set manually is the **System Serial Number**, **System UUID**, **MLB** and **ROM**. I have set them as **{CHANGE ME}** or **00 00 00 00 00 00** in the **ROM** section. OpenCore (OpenCore Configurator as well) will complain if you do not set them correctly. You can get the first three created with [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS). The ROM part can be your Ethernet or WiFi MAC Address such as **E4 85 G6 M8 H9 2Q**, for example. Refer to the [Vanilla Hackintosh Guide by Dortania](https://dortania.github.io/OpenCore-Install-Guide/) if you need more help.
 
 ## Preparation
 
@@ -115,7 +124,7 @@ Only things you need to set manually is the **System Serial Number**, **System U
 - Make sure CFG Lock is **Disabled**. Alternatively, enable AppleCpuPmCfgLock and AppleXcpmCfgLock in Kernel, however, its better for performance to disable CFG Lock with the UEFI Variables below. You can also use the CFG Lock tool included to find the bit and flip it between Enabled and Disabled. [More info here](https://dortania.github.io/OpenCore-Install-Guide/config.plist/kaby-lake.html#kernel).
 - Avoid Samsung PM drives as they did not let me go past the installer, it would always crash (may be fixed with NVMEFix.kext, I just bought a Sabrent SSD instead).
 - To add to the above point, just use a Sabrent SSD to make your life easy. I never got Samsung/Toshiba drives to work with the installer (they come as default with XPS/Optiplex computers).
-- For Big Sur, if you're using Dell Wireless 1560/1820A or something similar, make sure to modify your config [according to the "Please pay attention" section](https://github.com/acidanthera/AirportBrcmFixup#please-pay-attention), otherwise it will take forever to boot into the installer.
+- For Big Sur and newer, if you're using Dell Wireless 1560/1820A or something similar, make sure to modify your config [according to the "Please pay attention" section](https://github.com/acidanthera/AirportBrcmFixup#please-pay-attention), otherwise it will take forever to boot into the installer.
 
 ## BIOS Settings
 
@@ -132,9 +141,9 @@ Only things you need to set manually is the **System Serial Number**, **System U
 
 ### Automated way
 
-You can use the tools included to find your hidden CFG Lock value and disable it. These are **CFGUnlock** and **ControlMsrE2**. As of OpenCore 0.6.8, ControlMsrE2 is included and may be used to unlock CFG Lock for systems which have no easy way of doing so. This is a more automated and user-friendly way.
+You can use the tools included to find your hidden CFG Lock value and disable it. These are **CFGUnlock** and **ControlMsrE2**. As of OpenCore 0.6.8, ControlMsrE2 is included and may be used to unlock CFG Lock for systems which have no easy way of doing so. This is a more automated and user-friendly way. It simply finds the offset and lets you Enable/Disable it.
 
-Here is an example of the **CFGUnlock** tool. Boot into OpenCore, choose **CFGUnlock** and follow the instructions:
+Here is an example of the **CFGUnlock** tool. Boot into **OpenCore**, choose **CFGUnlock** and follow the instructions:
 
 ![CFGUnlock](images/CFGUnlock.jpg)
 
@@ -142,17 +151,25 @@ You will still need to use the manual way below to change the DVMT variables.
 
 ### Manual way
 
-The manual way is to boot into OpenCore, choose UEFIModify, type in `setup_var`, the offset and the required value. An example screenshot is below:
+The manual way is to boot into **OpenCore**, choose **UEFIModify**, type in `setup_var`, then the offset and finally the required value. An example screenshot is below:
 
 ![UEFIModify](images/UEFIModify.jpg)
 
-The above image is for the CFG Lock value. For DVMT, you would type:
+The above image is for the CFG Lock value as such:
+
+`setup_var 0x4ED 0x00`
+
+For DVMT, you would type:
 
 `setup_var 0x795 0x02`
 
 `setup_var 0x796 0x03`
 
-Make sure to restart after any changes, they should apply. You used to be able to check the CFG Lock status with VerifyMsrE2, but since it was replaced by ControlMsrE2, you can use that instead. You'll know if it worked or not, by whether you can boot your installer:
+If you're disabling BD PROCHOT, enter this:
+
+`setup_var 0x527 0x00`
+
+Make sure to restart after any changes, they should apply. You used to be able to check the CFG Lock status with **VerifyMsrE2**, but since it was replaced by **ControlMsrE2**, you can use that instead. You'll know if it worked or not, by whether you can boot your installer:
 
 ![VerifyMsrE2](images/VerifyMsrE2.jpg)
 
